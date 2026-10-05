@@ -22,6 +22,4 @@ El token Sanctum se guarda en una cookie `httpOnly`; las Server Actions hacen la
 
 ## Requisitos previos en el backend
 
-`app/Http/Requests/StoreOrderRequest.php` actualmente devuelve `false` en `authorize()` y no define reglas. Laravel rechazará todas las solicitudes de creación de órdenes hasta que se permita al usuario autenticado y se validen `items.*.product_id` y `items.*.quantity`.
-
 El endpoint de pago confirma el PaymentIntent en el servidor usando el identificador de PaymentMethod creado por Stripe.js. Para tarjetas que requieren autenticación 3D Secure, el backend debería crear/devolver un PaymentIntent `client_secret` y el frontend completar `stripe.confirmCardPayment`; el contrato actual no lo expone.
