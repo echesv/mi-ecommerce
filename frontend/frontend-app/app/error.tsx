@@ -1,0 +1,2 @@
+"use client";
+export default function ErrorPage({ reset }: { error: Error & { digest?: string }; reset: () => void }) { return <div className="container error-box"><span className="eyebrow">ALGO NO SALIÓ BIEN</span><h1>No pudimos cargar esta página.</h1><p>Revisa que la API de Laravel esté encendida y vuelve a intentarlo.</p><button className="button" onClick={() => reset()}>Intentar de nuevo</button></div>; }

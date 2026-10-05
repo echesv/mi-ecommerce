@@ -1,0 +1,9 @@
+"use client";
+import Link from "next/link";
+import { useCart } from "@/components/cart-provider";
+
+export default function CartPage() {
+  const { lines, subtotal, setQuantity, remove } = useCart();
+  if (!lines.length) return <section className="container empty-page"><span className="eyebrow">TU CARRITO</span><h1>Tu carrito está esperando.</h1><p>Explora la colección y encuentra algo que te guste.</p><Link className="button" href="/">Ir a la tienda</Link></section>;
+  return <section className="container standard-page"><span className="eyebrow">TU SELECCIÓN</span><h1>Carrito de compras</h1><div className="cart-layout"><div className="cart-lines">{lines.map(({ product, quantity }) => <article className="cart-line" key={product.id}><div className="cart-thumb">{product.image_url ? <img src={product.image_url} alt="" /> : <span>EC</span>}</div><div className="cart-line-info"><Link href={`/productos/${product.id}`}><h3>{product.name}</h3></Link><span>${Number(product.price).toFixed(2)} c/u</span><button className="text-button" onClick={() => remove(product.id)}>Eliminar</button></div><div className="quantity-control"><button onClick={() => setQuantity(product.id, quantity - 1)} aria-label="Reducir cantidad">−</button><span>{quantity}</span><button onClick={() => setQuantity(product.id, quantity + 1)} aria-label="Aumentar cantidad" disabled={quantity >= product.quantity}>+</button></div><strong>${(Number(product.price) * quantity).toFixed(2)}</strong></article>)}</div><aside className="summary"><h2>Resumen</h2><div><span>Subtotal</span><strong>${subtotal.toFixed(2)}</strong></div><div><span>Envío</span><span>Calculado al confirmar</span></div><hr /><div className="summary-total"><span>Total</span><strong>${subtotal.toFixed(2)}</strong></div><Link className="button full-button" href="/checkout">Continuar al pago</Link><p className="secure-note">Pago protegido por Stripe</p></aside></div></section>;
+}
